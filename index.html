@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pick Two</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Menu button -->
+        <button class="menu-btn" id="menuBtn" aria-label="Open customize menu">
+            <span class="menu-icon"></span>
+        </button>
+
+        <!-- Main content -->
+        <main class="main-content">
+            <h1 class="title">Pick Any Two</h1>
+            <p class="subtitle">You can only choose two at once</p>
+            
+            <div class="toggles-container">
+                <!-- Toggle 1 -->
+                <div class="toggle-row">
+                    <span class="toggle-label" id="label1">Good</span>
+                    <button class="toggle-switch" id="toggle1" data-index="0" aria-label="Toggle Good">
+                        <span class="toggle-slider"></span>
+                    </button>
+                </div>
+                
+                <!-- Toggle 2 -->
+                <div class="toggle-row">
+                    <span class="toggle-label" id="label2">Fast</span>
+                    <button class="toggle-switch" id="toggle2" data-index="1" aria-label="Toggle Fast">
+                        <span class="toggle-slider"></span>
+                    </button>
+                </div>
+                
+                <!-- Toggle 3 -->
+                <div class="toggle-row">
+                    <span class="toggle-label" id="label3">Cheap</span>
+                    <button class="toggle-switch" id="toggle3" data-index="2" aria-label="Toggle Cheap">
+                        <span class="toggle-slider"></span>
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Customize panel -->
+        <aside class="customize-panel" id="customizePanel">
+            <div class="panel-content">
+                <h2>Create Your Own</h2>
+                <p class="panel-description">Customize the labels to make your own version</p>
+                
+                <form class="customize-form" id="customizeForm">
+                    <div class="input-group">
+                        <label for="input1">Option 1</label>
+                        <input type="text" id="input1" maxlength="20" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="input2">Option 2</label>
+                        <input type="text" id="input2" maxlength="20" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="input3">Option 3</label>
+                        <input type="text" id="input3" maxlength="20" required>
+                    </div>
+                    
+                    <div class="color-section">
+                        <h3 class="color-title">Colors</h3>
+                        <div class="color-inputs">
+                            <div class="input-group">
+                                <label for="colorPrimary">Primary Color</label>
+                                <input type="color" id="colorPrimary" value="#667eea">
+                            </div>
+                            <div class="input-group">
+                                <label for="colorSecondary">Secondary Color</label>
+                                <input type="color" id="colorSecondary" value="#764ba2">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button type="button" class="copy-link-btn" id="copyLinkBtn">
+                        Copy Shareable Link
+                    </button>
+                    
+                    <div class="copy-feedback" id="copyFeedback">
+                        Link copied to clipboard!
+                    </div>
+                </form>
+            </div>
+        </aside>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

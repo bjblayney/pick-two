@@ -1,0 +1,390 @@
+/* ===== CSS Variables ===== */
+:root {
+    --color-primary: #667eea;
+    --color-secondary: #764ba2;
+    --color-text: #333;
+    --color-text-light: #666;
+    --color-border: #ddd;
+    --color-border-hover: #ccc;
+    --color-white: #ffffff;
+    --color-shadow: rgba(0, 0, 0, 0.2);
+    --color-shadow-light: rgba(0, 0, 0, 0.15);
+}
+
+/* ===== CSS Reset & Base Styles ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text);
+    overflow-x: hidden;
+}
+
+/* ===== Container ===== */
+.container {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    padding: 20px;
+}
+
+/* ===== Menu Button ===== */
+.menu-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    border: none;
+    background: var(--color-white);
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 4px 12px var(--color-shadow-light);
+    transition: transform 0.2s, box-shadow 0.2s;
+    z-index: 1000;
+}
+
+.menu-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 16px var(--color-shadow);
+}
+
+.menu-btn:active {
+    transform: scale(0.95);
+}
+
+/* Hamburger icon */
+.menu-icon {
+    display: block;
+    position: relative;
+    width: 24px;
+    height: 2px;
+    background: var(--color-primary);
+    margin: 0 auto;
+    transition: background 0.3s;
+}
+
+.menu-icon::before,
+.menu-icon::after {
+    content: '';
+    position: absolute;
+    width: 24px;
+    height: 2px;
+    background: var(--color-primary);
+    left: 0;
+    transition: transform 0.3s;
+}
+
+.menu-icon::before {
+    top: -8px;
+}
+
+.menu-icon::after {
+    top: 8px;
+}
+
+/* X icon when panel is open */
+.menu-btn.active .menu-icon {
+    background: transparent;
+}
+
+.menu-btn.active .menu-icon::before {
+    transform: rotate(45deg) translateY(8px);
+}
+
+.menu-btn.active .menu-icon::after {
+    transform: rotate(-45deg) translateY(-8px);
+}
+
+/* ===== Main Content ===== */
+.main-content {
+    background: var(--color-white);
+    border-radius: 20px;
+    padding: 50px 40px;
+    box-shadow: 0 10px 40px var(--color-shadow);
+    text-align: center;
+}
+
+.title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    font-size: 1rem;
+    color: var(--color-text-light);
+    margin-bottom: 50px;
+}
+
+/* ===== Toggles Container ===== */
+.toggles-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* ===== Toggle Row ===== */
+.toggle-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+}
+
+.toggle-label {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--color-text);
+    text-align: left;
+    flex: 1;
+    transition: color 0.3s;
+}
+
+.toggle-row:has(.toggle-switch.active) .toggle-label {
+    color: var(--color-primary);
+}
+
+/* ===== Toggle Switch ===== */
+.toggle-switch {
+    position: relative;
+    width: 80px;
+    height: 44px;
+    background: var(--color-border);
+    border: none;
+    border-radius: 22px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    flex-shrink: 0;
+}
+
+.toggle-switch:hover {
+    background: var(--color-border-hover);
+}
+
+.toggle-switch.active {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+}
+
+.toggle-switch.active:hover {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+    filter: brightness(0.9);
+}
+
+/* Toggle Slider (the circle) */
+.toggle-slider {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 36px;
+    height: 36px;
+    background: var(--color-white);
+    border-radius: 50%;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 6px var(--color-shadow);
+}
+
+.toggle-switch.active .toggle-slider {
+    transform: translateX(36px);
+}
+
+/* ===== Customize Panel ===== */
+.customize-panel {
+    position: fixed;
+    top: 0;
+    right: -400px;
+    width: 100%;
+    max-width: 400px;
+    height: 100vh;
+    background: var(--color-white);
+    box-shadow: -4px 0 20px var(--color-shadow);
+    transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 999;
+    overflow-y: auto;
+}
+
+.customize-panel.open {
+    right: 0;
+}
+
+.panel-content {
+    padding: 80px 30px 30px;
+}
+
+.customize-panel h2 {
+    font-size: 1.8rem;
+    color: var(--color-primary);
+    margin-bottom: 10px;
+}
+
+.panel-description {
+    color: var(--color-text-light);
+    font-size: 0.9rem;
+    margin-bottom: 30px;
+}
+
+/* ===== Form Styles ===== */
+.customize-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.input-group label {
+    font-weight: 600;
+    color: var(--color-text);
+    font-size: 0.9rem;
+}
+
+.input-group input {
+    padding: 12px;
+    border: 2px solid var(--color-border);
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.input-group input[type="color"] {
+    height: 50px;
+    padding: 4px;
+    cursor: pointer;
+}
+
+.color-section {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 2px solid var(--color-border);
+}
+
+.color-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: 15px;
+}
+
+.color-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.copy-link-btn {
+    margin-top: 10px;
+    padding: 14px 24px;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+    color: var(--color-white);
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.copy-link-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.copy-link-btn:active {
+    transform: translateY(0);
+}
+
+.copy-feedback {
+    text-align: center;
+    color: var(--color-primary);
+    font-weight: 600;
+    font-size: 0.9rem;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.copy-feedback.show {
+    opacity: 1;
+}
+
+/* ===== Responsive Design ===== */
+@media (max-width: 500px) {
+    .container {
+        padding: 10px;
+    }
+
+    .main-content {
+        padding: 40px 25px;
+    }
+
+    .title {
+        font-size: 1.8rem;
+    }
+
+    .subtitle {
+        font-size: 0.9rem;
+        margin-bottom: 40px;
+    }
+
+    .toggle-label {
+        font-size: 1.3rem;
+    }
+
+    .toggles-container {
+        gap: 25px;
+    }
+
+    .customize-panel {
+        max-width: 100%;
+    }
+
+    .panel-content {
+        padding: 70px 20px 20px;
+    }
+}
+
+@media (max-width: 350px) {
+    .main-content {
+        padding: 30px 20px;
+    }
+
+    .title {
+        font-size: 1.6rem;
+    }
+
+    .toggle-label {
+        font-size: 1.1rem;
+    }
+
+    .toggle-switch {
+        width: 70px;
+        height: 38px;
+    }
+
+    .toggle-slider {
+        width: 30px;
+        height: 30px;
+    }
+
+    .toggle-switch.active .toggle-slider {
+        transform: translateX(32px);
+    }
+}
