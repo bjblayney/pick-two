@@ -1,7 +1,7 @@
 /* ===== CSS Variables ===== */
 :root {
-    --color-primary: #667eea;
-    --color-secondary: #764ba2;
+    --color-primary: #0D9488;
+    --color-secondary: #D6D3D1;
     --color-text: #333;
     --color-text-light: #666;
     --color-border: #ddd;
@@ -20,7 +20,9 @@
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+    background: linear-gradient(-45deg, var(--color-primary), var(--color-secondary));
+    background-size: 100% 100%;
+    /* animation: gradientShift 60s ease infinite; */
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -28,6 +30,18 @@ body {
     color: var(--color-text);
     overflow-x: hidden;
 }
+
+/* @keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+} */
 
 /* ===== Container ===== */
 .container {
@@ -98,27 +112,41 @@ body {
 }
 
 .menu-btn.active .menu-icon::before {
-    transform: rotate(45deg) translateY(8px);
+    transform: translateY(8px) rotate(45deg);
 }
 
 .menu-btn.active .menu-icon::after {
-    transform: rotate(-45deg) translateY(-8px);
+    transform: translateY(-8px) rotate(-45deg);
 }
 
 /* ===== Main Content ===== */
 .main-content {
-    background: var(--color-white);
-    border-radius: 20px;
-    padding: 50px 40px;
-    box-shadow: 0 10px 40px var(--color-shadow);
-    text-align: center;
+  background:
+    linear-gradient(145deg, #ffffff, #e6e6e6),
+    repeating-linear-gradient(
+      180deg,
+      rgba(255,255,255,0.2) 0px,
+      rgba(255,255,255,0.2) 2px,
+      rgba(0,0,0,0.04) 4px
+    );
+  border-radius: 20px;
+  padding: 50px 40px;
+  box-shadow: 0 10px 40px var(--color-shadow);
+  background-blend-mode: overlay;
+  text-align: center;
+  transition: all 0.2s ease-in-out;
 }
+
+/* .main-content:hover {
+  transform: translateY(-3px) rotate(-.5deg);
+  box-shadow: 0 10px 20px var(--color-shadow);
+} */
 
 .title {
     font-size: 2.2rem;
     font-weight: 700;
     color: var(--color-primary);
-    margin-bottom: 10px;
+    margin-bottom: 40px;
 }
 
 .subtitle {
@@ -164,8 +192,11 @@ body {
     border: none;
     border-radius: 22px;
     cursor: pointer;
-    transition: background 0.3s ease;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
     flex-shrink: 0;
+    box-shadow: 
+        inset 0 2px 4px rgba(0, 0, 0, 0.2),
+        inset 0 -1px 2px rgba(255, 255, 255, 0.3);
 }
 
 .toggle-switch:hover {
@@ -174,11 +205,14 @@ body {
 
 .toggle-switch.active {
     background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+    box-shadow: 
+        inset 0 2px 6px rgba(0, 0, 0, 0.3),
+        0 0 20px rgba(102, 126, 234, 0.4);
 }
 
 .toggle-switch.active:hover {
     background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
-    filter: brightness(0.9);
+    filter: brightness(1.05);
 }
 
 /* Toggle Slider (the circle) */
@@ -188,14 +222,31 @@ body {
     left: 4px;
     width: 36px;
     height: 36px;
-    background: var(--color-white);
+    background: linear-gradient(180deg, #ffffff 0%, #f0f0f0 100%);
     border-radius: 50%;
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 2px 6px var(--color-shadow);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
+    box-shadow: 
+        0 4px 8px rgba(0, 0, 0, 0.25),
+        0 1px 2px rgba(0, 0, 0, 0.1),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.05),
+        inset 0 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+.toggle-switch:hover .toggle-slider {
+    box-shadow: 
+        0 5px 10px rgba(0, 0, 0, 0.3),
+        0 2px 4px rgba(0, 0, 0, 0.15),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.05),
+        inset 0 1px 2px rgba(255, 255, 255, 0.8);
 }
 
 .toggle-switch.active .toggle-slider {
     transform: translateX(36px);
+    box-shadow: 
+        0 6px 12px rgba(0, 0, 0, 0.3),
+        0 2px 4px rgba(0, 0, 0, 0.15),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.05),
+        inset 0 1px 2px rgba(255, 255, 255, 0.9);
 }
 
 /* ===== Customize Panel ===== */
@@ -286,7 +337,7 @@ body {
 
 .color-inputs {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 20px;
 }
 

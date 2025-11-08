@@ -3,7 +3,7 @@
 let activeButtons = [false, false, false];
 
 // Default labels
-const defaultLabels = ['Good', 'Fast', 'Cheap'];
+const defaultLabels = ['Fast', 'Good', 'Cheap'];
 
 // ===== DOM Elements =====
 const menuBtn = document.getElementById('menuBtn');
@@ -136,15 +136,16 @@ function handleToggleClick(clickedIndex) {
         // Count how many buttons are currently active
         const activeCount = activeButtons.filter(Boolean).length;
         
-        // If 2 are already active, deactivate the oldest one
+        // If 2 are already active, deactivate a random one
         if (activeCount >= 2) {
-            // Find the first active button and deactivate it
-            for (let i = 0; i < 3; i++) {
-                if (i !== clickedIndex && activeButtons[i]) {
-                    activeButtons[i] = false;
-                    break;
-                }
-            }
+            // Get indices of all active buttons (excluding the one we're about to activate)
+            const activeIndices = activeButtons
+                .map((active, index) => active && index !== clickedIndex ? index : -1)
+                .filter(index => index !== -1);
+            
+            // Randomly pick one to deactivate
+            const randomIndex = activeIndices[Math.floor(Math.random() * activeIndices.length)];
+            activeButtons[randomIndex] = false;
         }
         
         // Activate the clicked button

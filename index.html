@@ -5,6 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pick Two</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🎯</text></svg>">
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#0D9488">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Pick Two">
+
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Pick Two - Interactive Decision Tool">
+    <meta property="og:description" content="Create and share custom 'pick any two' decision triangles. Customize labels and colors, then share via URL.">
+    <meta property="og:url" content="https://bjblayney.github.io/pick-two/">
+    <meta property="og:image" content="https://bjblayney.github.io/pick-two/og-image.png">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Pick Two - Interactive Decision Tool">
+    <meta name="twitter:description" content="Create and share custom 'pick any two' decision triangles. Customize labels and colors, then share via URL.">
+    <meta name="twitter:image" content="https://bjblayney.github.io/pick-two/og-image.png">
+
+    <!-- Additional Meta -->
+    <meta name="description" content="Interactive 'pick any two' decision tool. Customize labels and colors, then share your version via URL. No frameworks, pure vanilla JavaScript.">
+    <meta name="keywords" content="decision tool, pick two, project management, interactive, customizable">
+    <meta name="author" content="BJ Blayney">
 </head>
 <body>
     <div class="container">
@@ -15,13 +44,10 @@
 
         <!-- Main content -->
         <main class="main-content">
-            <h1 class="title">Pick Any Two</h1>
-            <p class="subtitle">You can only choose two at once</p>
-            
             <div class="toggles-container">
                 <!-- Toggle 1 -->
                 <div class="toggle-row">
-                    <span class="toggle-label" id="label1">Good</span>
+                    <span class="toggle-label" id="label1">Fast</span>
                     <button class="toggle-switch" id="toggle1" data-index="0" aria-label="Toggle Good">
                         <span class="toggle-slider"></span>
                     </button>
@@ -29,7 +55,7 @@
                 
                 <!-- Toggle 2 -->
                 <div class="toggle-row">
-                    <span class="toggle-label" id="label2">Fast</span>
+                    <span class="toggle-label" id="label2">Good</span>
                     <button class="toggle-switch" id="toggle2" data-index="1" aria-label="Toggle Fast">
                         <span class="toggle-slider"></span>
                     </button>
@@ -70,11 +96,11 @@
                         <div class="color-inputs">
                             <div class="input-group">
                                 <label for="colorPrimary">Primary Color</label>
-                                <input type="color" id="colorPrimary" value="#667eea">
+                                <input type="color" id="colorPrimary" value="#0D9488">
                             </div>
                             <div class="input-group">
                                 <label for="colorSecondary">Secondary Color</label>
-                                <input type="color" id="colorSecondary" value="#764ba2">
+                                <input type="color" id="colorSecondary" value="#D6D3D1">
                             </div>
                         </div>
                     </div>

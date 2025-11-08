@@ -1,0 +1,10 @@
+{
+  "name": "Pick Two",
+  "short_name": "Pick Two",
+  "description": "Pick any two - Create and share custom decision triangles",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#0D9488",
+  "theme_color": "#0D9488",
+  "orientation": "portrait-primary"
+}
