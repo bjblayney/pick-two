@@ -79,6 +79,14 @@ function loadFromURL() {
         colorPrimaryInput.value = primaryColor;
         colorSecondaryInput.value = secondaryColor;
     }
+
+    // Apply theme if it exists
+    if (theme) {
+        switchTheme(theme);
+    } else {
+        // Load saved theme from localStorage if no URL param
+        loadSavedTheme();
+    }
     
     // Apply state if it exists (e.g., "110" means first two buttons active)
     if (stateParam && stateParam.length === 3) {
@@ -111,9 +119,15 @@ function generateShareableURL() {
     params.set('b', labelInputs[1].value.trim() || defaultLabels[1]);
     params.set('c', labelInputs[2].value.trim() || defaultLabels[2]);
     
-    // Add colors
-    params.set('c1', colorPrimaryInput.value);
-    params.set('c2', colorSecondaryInput.value);
+    // Only add colors if using default theme
+    if (currentTheme === 'default') {
+        params.set('c1', colorPrimaryInput.value);
+        params.set('c2', colorSecondaryInput.value);
+    }
+
+    // Add theme
+    const currentTheme = localStorage.getItem('theme') || 'default';
+    params.set('theme', currentTheme);
     
     // Add state (e.g., "110" = first two active, last one inactive)
     const stateString = activeButtons.map(active => active ? '1' : '0').join('');
@@ -274,6 +288,66 @@ document.addEventListener('click', (e) => {
         togglePanel();
     }
 });
+
+// ===== Theme Management =====
+const themeButtons = document.querySelectorAll('.theme-btn');
+const stylesheetLink = document.getElementById('stylesheet');
+
+/**
+ * Switch between stylesheets
+ */
+function switchTheme(theme) {
+    const themeFiles = {
+        'default': 'style.css',
+        'comic': 'style-comic.css',
+        'lcars': 'style-lcars.css'
+    };
+    
+    stylesheetLink.href = themeFiles[theme] || 'style.css';
+    
+    // Update active state
+    themeButtons.forEach(btn => {
+        if (btn.dataset.theme === theme) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+    });
+
+    // Show/hide color pickers based on theme
+    updateColorPickerVisibility(theme);
+    
+    // Save to localStorage
+    localStorage.setItem('theme', theme);
+}
+
+/**
+ * Load saved theme on page load
+ */
+function loadSavedTheme() {
+    const savedTheme = localStorage.getItem('theme') || 'default';
+    switchTheme(savedTheme);
+}
+
+// Theme button event listeners
+themeButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+        switchTheme(btn.dataset.theme);
+    });
+});
+
+/**
+ * Show or hide color pickers based on theme
+ */
+function updateColorPickerVisibility(theme) {
+    const colorSection = document.querySelector('.color-section');
+    
+    if (theme === 'default') {
+        colorSection.style.display = 'block';
+    } else {
+        colorSection.style.display = 'none';
+    }
+}
 
 // ===== Initialize =====
 

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pick Two</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" id="stylesheet">
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🎯</text></svg>">
 
@@ -76,6 +76,22 @@
             <div class="panel-content">
                 <h2>Create Your Own</h2>
                 <p class="panel-description">Customize the labels to make your own version</p>
+
+                <!-- Theme Selector Section -->
+                <div class="theme-section">
+                    <h3 class="theme-title">Theme</h3>
+                    <div class="theme-buttons">
+                        <button type="button" class="theme-btn active" data-theme="default">
+                            <span class="theme-name">Modern</span>
+                        </button>
+                        <button type="button" class="theme-btn" data-theme="comic">
+                            <span class="theme-name">Comic Book</span>
+                        </button>
+                        <button type="button" class="theme-btn" data-theme="lcars">
+                            <span class="theme-name">LCARS</span>
+                        </button>
+                    </div>
+                </div>
                 
                 <form class="customize-form" id="customizeForm">
                     <div class="input-group">
