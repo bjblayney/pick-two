@@ -318,12 +318,12 @@ body {
 
 .input-group input[type="color"] {
     height: 50px;
+    width: 60px;
     padding: 4px;
     cursor: pointer;
 }
 
 .color-section {
-    margin-top: 30px;
     padding-top: 20px;
     border-top: 2px solid var(--color-border);
 }
