@@ -56,6 +56,9 @@ function loadFromURL() {
     const primaryColor = params.get('c1');
     const secondaryColor = params.get('c2');
     
+    // Get theme from URL
+    const themeParam = params.get('theme');
+    
     // Get state (which buttons are active)
     const stateParam = params.get('state');
     
@@ -79,10 +82,10 @@ function loadFromURL() {
         colorPrimaryInput.value = primaryColor;
         colorSecondaryInput.value = secondaryColor;
     }
-
+    
     // Apply theme if it exists
-    if (theme) {
-        switchTheme(theme);
+    if (themeParam) {
+        switchTheme(themeParam);
     } else {
         // Load saved theme from localStorage if no URL param
         loadSavedTheme();
@@ -119,15 +122,15 @@ function generateShareableURL() {
     params.set('b', labelInputs[1].value.trim() || defaultLabels[1]);
     params.set('c', labelInputs[2].value.trim() || defaultLabels[2]);
     
+    // Add theme
+    const savedTheme = localStorage.getItem('theme') || 'default';
+    params.set('theme', savedTheme);
+    
     // Only add colors if using default theme
-    if (currentTheme === 'default') {
+    if (savedTheme === 'default') {
         params.set('c1', colorPrimaryInput.value);
         params.set('c2', colorSecondaryInput.value);
     }
-
-    // Add theme
-    const currentTheme = localStorage.getItem('theme') || 'default';
-    params.set('theme', currentTheme);
     
     // Add state (e.g., "110" = first two active, last one inactive)
     const stateString = activeButtons.map(active => active ? '1' : '0').join('');
@@ -214,43 +217,82 @@ function updateLabelsRealTime() {
  */
 async function copyShareableLink() {
     const url = generateShareableURL();
+    console.log('Attempting to copy URL:', url);
     
+    // Modern Clipboard API (preferred)
+    if (navigator.clipboard && window.isSecureContext) {
+        console.log('Trying Clipboard API...');
+        try {
+            await navigator.clipboard.writeText(url);
+            console.log('Clipboard API success!');
+            showCopySuccess();
+            return;
+        } catch (err) {
+            console.warn('Clipboard API failed:', err);
+        }
+    } else {
+        console.log('Clipboard API not available. isSecureContext:', window.isSecureContext);
+    }
+    
+    // Fallback method for older browsers or non-HTTPS
+    console.log('Trying fallback method...');
     try {
-        await navigator.clipboard.writeText(url);
-        
-        // Show feedback
-        copyFeedback.classList.add('show');
-        copyLinkBtn.textContent = 'Copied!';
-        
-        // Reset after 2 seconds
-        setTimeout(() => {
-            copyFeedback.classList.remove('show');
-            copyLinkBtn.textContent = 'Copy Shareable Link';
-        }, 2000);
-    } catch (err) {
-        // Fallback for browsers that don't support clipboard API
         const textArea = document.createElement('textarea');
         textArea.value = url;
         textArea.style.position = 'fixed';
         textArea.style.left = '-999999px';
-        document.body.appendChild(textArea);
-        textArea.select();
+        textArea.style.top = '-999999px';
+        textArea.style.opacity = '0';
+        textArea.setAttribute('readonly', '');
         
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        textArea.setSelectionRange(0, 99999);
+        
+        let successful = false;
         try {
-            document.execCommand('copy');
-            copyFeedback.classList.add('show');
-            copyLinkBtn.textContent = 'Copied!';
-            
-            setTimeout(() => {
-                copyFeedback.classList.remove('show');
-                copyLinkBtn.textContent = 'Copy Shareable Link';
-            }, 2000);
+            successful = document.execCommand('copy');
+            console.log('execCommand result:', successful);
         } catch (err) {
-            alert('Failed to copy link. Please copy manually: ' + url);
+            console.error('execCommand failed:', err);
         }
         
         document.body.removeChild(textArea);
+        
+        if (successful) {
+            console.log('Fallback method succeeded!');
+            showCopySuccess();
+        } else {
+            console.log('Fallback method failed, showing manual copy option');
+            showCopyFallback(url);
+        }
+    } catch (err) {
+        console.error('All copy methods failed:', err);
+        showCopyFallback(url);
     }
+}
+
+/**
+ * Show success feedback
+ */
+function showCopySuccess() {
+    console.log('Showing success feedback');
+    copyFeedback.classList.add('show');
+    copyLinkBtn.textContent = 'Copied!';
+    
+    setTimeout(() => {
+        copyFeedback.classList.remove('show');
+        copyLinkBtn.textContent = 'Copy Shareable Link';
+    }, 2000);
+}
+
+/**
+ * Fallback: show URL in prompt for manual copying
+ */
+function showCopyFallback(url) {
+    console.log('Showing fallback prompt');
+    prompt('Copy this link:', url);
 }
 
 // ===== Event Listeners =====
