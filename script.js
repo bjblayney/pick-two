@@ -218,6 +218,28 @@ function updateLabelsRealTime() {
 async function copyShareableLink() {
     const url = generateShareableURL();
     console.log('Attempting to copy URL:', url);
+    // Track the copied link with theme, labels and state extracted from the URL
+    try {
+        if (typeof TrackStack !== 'undefined' && TrackStack && typeof TrackStack.track === 'function') {
+            const parsed = new URL(url);
+            const params = parsed.searchParams;
+            const theme = params.get('theme') || '';
+            const labels = [
+                params.get('a') || defaultLabels[0],
+                params.get('b') || defaultLabels[1],
+                params.get('c') || defaultLabels[2]
+            ];
+            const state = params.get('state') || '';
+
+            TrackStack.track('copied-link', {
+                theme: theme,
+                labels: labels,
+                state: state
+            });
+        }
+    } catch (trackErr) {
+        console.warn('TrackStack.track failed:', trackErr);
+    }
     
     // Modern Clipboard API (preferred)
     if (navigator.clipboard && window.isSecureContext) {
