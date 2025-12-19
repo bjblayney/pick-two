@@ -398,3 +398,9 @@ loadFromURL();
 
 // Initialize UI
 updateUI();
+
+// Tracking script initialization
+if (typeof TrackStack !== 'undefined') {
+    TrackStack.init('ts_e1738dd48909319f1100b61286267cc96a374dbb1ac845b8f39e52a4f28980ea');
+    TrackStack.page();
+};
