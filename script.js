@@ -220,7 +220,7 @@ async function copyShareableLink() {
     console.log('Attempting to copy URL:', url);
     // Track the copied link with theme, labels and state extracted from the URL
     try {
-        if (typeof TrackStack !== 'undefined' && TrackStack && typeof TrackStack.track === 'function') {
+        if (typeof Janus !== 'undefined' && Janus && typeof Janus.track === 'function') {
             const parsed = new URL(url);
             const params = parsed.searchParams;
             const theme = params.get('theme') || '';
@@ -231,14 +231,14 @@ async function copyShareableLink() {
             ];
             const state = params.get('state') || '';
 
-            TrackStack.track('copied-link', {
+            Janus.track('copied-link', {
                 theme: theme,
                 labels: labels,
                 state: state
             });
         }
     } catch (trackErr) {
-        console.warn('TrackStack.track failed:', trackErr);
+        console.warn('Janus.track failed:', trackErr);
     }
     
     // Modern Clipboard API (preferred)
@@ -422,6 +422,6 @@ loadFromURL();
 updateUI();
 
 // Tracking script initialization
-if (typeof TrackStack !== 'undefined') {
-    TrackStack.init('ts_e1738dd48909319f1100b61286267cc96a374dbb1ac845b8f39e52a4f28980ea');
+if (typeof Janus !== 'undefined') {
+    Janus.init('jns_53cfc5a135cd0931ecedae8d4f18f7a44370d280aa73ff0108ce71d5f1e31a78');
 };
